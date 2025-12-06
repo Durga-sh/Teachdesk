@@ -16,7 +16,7 @@ const adminSchema  = new  schema({
     email:{type:String , unique: true},
     password: String,
     firstName: String,
-    lastname:  String 
+    lastName:  String 
 
 })
 
@@ -25,7 +25,7 @@ const courseSchema  = new schema({
     description : String,
     price: Number,
     imageUrl: String,
-    createrId: schemaId
+    creatorId: schemaId
 
 })
 
