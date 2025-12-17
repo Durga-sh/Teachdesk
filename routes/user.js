@@ -1,5 +1,5 @@
 import express from "express";
-import { userModel } from "../db.js";
+import { courseModel, purchaseModel, userModel } from "../db.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import z from "zod";
@@ -101,24 +101,21 @@ useRouter.get("/purchases", auth ,async function (req, res) {
   console.log(id);
   
 
-  const user = await userModel.findOne({
+  const purchases = await purchaseModel.findOne({
     _id:id
   })
 
-  console.log(user);
-  
+  const courseData = await courseModel.find({
+    _id:{$in:purchases.map (x=>x.courseId)}
+  })
 
-  if(user){
-    res.json({
-    message: "purchased Course",
-  });
-  }
-  else{
-    res.status(500).json({
-      message:"Server Error"
-    })
-  }
+res.json({
+  purchases,
+  courseData
+})
 
 });
+
+
 
 export default useRouter;
